@@ -1,0 +1,29 @@
+{
+  "name": "hexo-migrator-drupal-6",
+  "version": "0.0.3",
+  "description": "Drupal 6 migrator for Hexo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farnabaz/hexo-migrator-drupal-6.git"
+  },
+  "keywords": [
+    "hexo",
+    "drupal 6"
+  ],
+  "author": "Farnabaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/farnabaz/hexo-migrator-drupal-6/issues"
+  },
+  "homepage": "https://github.com/farnabaz/hexo-migrator-drupal-6#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "mysql": "^2.10.2",
+    "prompt": "^1.0.0",
+    "yamljs": "^0.2.7"
+  }
+}

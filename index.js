@@ -15,51 +15,34 @@ function getNodes(err, rows, fields) {
       connection.query(`SELECT term_data.name FROM ${ prefix }term_data term_data, \
         ${ prefix }term_node term_node WHERE term_data.tid = term_node.tid AND term_node.nid = ` + node.nid,
         function(err, rows, fields) {
-          node.tags = []
+          var meta = {
+            title: node.title,
+            nid: node.nid,
+            permalink: node.url,
+            date: new Date(node.created * 1000).toString(),
+          };
           if (rows.length > 0) {
+            meta.tags = [];
             for (j in rows) {
-              node.tags.push(rows[j].name)
+              meta.tags.push(rows[j].name)
             }
           }
-          (function(node){
-            connection.query(`SELECT field_reference_url as url, \
-            field_reference_title as title FROM ${ prefix }content_field_reference ref \
-             WHERE ref.nid = ` + node.nid,
-              function(err, rows, fields) {
-              var meta = {
-                title: node.title,
-                nid: node.nid,
-                permalink: node.url,
-                date: new Date(node.created * 1000).toString(),
-              };
-              if (node.tags) {
-                meta.tags = node.tags;
-              }
-              if (rows.length > 0) {
-                meta.references = []
-                for (j in rows) {
-                  meta.references.push("[" + rows[j].title + "]("+rows[j].url+")")
+
+          var body = node.body;
+
+          var content = "---\n";
+          content += YAML.stringify(meta);
+          content += "---\n";
+          content += body
+          mkdirp('source/_posts', function(err) {
+            fs.writeFile("source/_posts/" + node.nid + ".md", content, function(err) {
+                if (err) {
+                  return console.log(err);
                 }
-              }
 
-              var body = node.body;
-
-
-              var content = "---\n";
-              content += YAML.stringify(meta);
-              content += "---\n";
-              content += body
-              mkdirp('source/_posts', function(err) {
-                fs.writeFile("source/_posts/" + node.nid + ".md", content, function(err) {
-                    if (err) {
-                      return console.log(err);
-                    }
-
-                    console.log("Node/Story " + node.nid + " Saved!");
-                });
-              });
-            })
-          })(node)
+                console.log("Node/Story " + node.nid + " Saved!");
+            });
+          });
       })
     })(rows[i]);
   }

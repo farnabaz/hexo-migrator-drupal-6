@@ -1,6 +1,6 @@
 {
   "name": "hexo-migrator-drupal-6",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Drupal 6 migrator for Hexo",
   "main": "index.js",
   "scripts": {

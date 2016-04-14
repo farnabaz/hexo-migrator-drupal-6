@@ -48,6 +48,7 @@ function getNodes(err, rows, fields) {
   }
   nextStep();
 }
+
 function getPages(err, rows, fields) {
   if (err) throw err;
   for (i in rows) {
